@@ -20,7 +20,7 @@ jobs:
 
     - name: Build the Installer
       run: |
-        iscc "C:\Users\newto\OneDrive\Documents\GitHub\CCFL-Application\Releases\Data\CCFL Setup Script.iss"  # Path to your Inno Setup script
+        iscc "C:\Users\newto\OneDrive\Documents\GitHub\CCFL-Application\Data\Inno"  # Path to your Inno Setup script
         echo "Installer built successfully."
 
     - name: Upload Installer as Release Asset
