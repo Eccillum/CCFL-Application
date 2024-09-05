@@ -1,24 +1,32 @@
-name: Release
+name: Build and Release Installer
 
 on:
   push:
     tags:
-      - 'v*'  # Only run on version tags (e.g., v1.0.0)
+      - 'v*'  # This workflow will run when a tag is pushed (e.g., v1.0.0)
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build_installer:
+    runs-on: windows-latest  # Use a Windows runner to build the installer
+
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
+    - name: Check out the code
+      uses: actions/checkout@v2
 
-      - name: Build the application
-        run: |
-          # Command to build your application (e.g., using PyInstaller)
+    - name: Set up Inno Setup
+      uses: dmulholland/inno-setup-action@v1
+      with:
+        version: "5.6.1"  # Specify the version of Inno Setup to use
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: path/to/your/installer.exe  # Replace with the path to your .exe installer
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build the Installer
+      run: |
+        iscc "D:\Software Dev\CCFL Program\CCFL Setup Script.iss"  # Path to your Inno Setup script
+        echo "Installer built successfully."
+
+    - name: Upload Installer as Release Asset
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          D:\Software Dev\CCFL Program\Output\CCFL Setup.exe  # Path to the generated .exe file
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
