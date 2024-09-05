@@ -20,13 +20,13 @@ jobs:
 
     - name: Build the Installer
       run: |
-        iscc "D:\Software Dev\CCFL Program\CCFL Setup Script.iss"  # Path to your Inno Setup script
+        iscc "C:\Users\newto\OneDrive\Documents\GitHub\CCFL-Application\Releases\Data\CCFL Setup Script.iss"  # Path to your Inno Setup script
         echo "Installer built successfully."
 
     - name: Upload Installer as Release Asset
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          D:\Software Dev\CCFL Program\Output\CCFL Setup.exe  # Path to the generated .exe file
+          C:\Users\newto\OneDrive\Documents\GitHub\CCFL-Application\Releases\Latest\CCFL Setup.exe  # Path to the generated .exe file
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
